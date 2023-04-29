@@ -22,3 +22,19 @@ module "vm" {
     subnetwork_name = data.terraform_remote_state.network.outputs.vpc1_subnets["vm"].name
   }
 }
+
+
+module "db" {
+  source           = "github.com/ParisaMousavi/gcp-sql?ref=main"
+  server_name      = module.name.mssql
+  database_version = "SQLSERVER_2019_EXPRESS" # supported: MYSQL, MSSQL, POSTGRESQL
+  root_password = "S}uSk>@ATq8{|V_U"
+  default_user = {
+    name = "dbadmin"
+    password = "S}uSk>@ATq8{|V_U"
+  }
+  settings = {
+    tier =  "db-custom-2-3840"
+  }
+  databases = ["mydb"]
+}
